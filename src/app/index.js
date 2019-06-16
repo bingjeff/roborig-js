@@ -33,16 +33,20 @@ let sketch = (p) => {
     let kinematic_tree;
 
     p.preload = () => {
+        // Create a new scene.
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color("white");
+        // Load the URDF.
         const xml_prefix = "xml/kuka_iiwa/";
         let xml_filename = xml_prefix + "model.urdf";
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", xml_filename, /*async*/ false);
+        xhr.open("GET", xml_filename, /*async*/ true);
         xhr.onerror = function () { console.log("Failed to load: " + xml_filename); }
         xhr.onload = function () {
-            // Create a new scene.
-            scene = new THREE.Scene();
-            scene.background = new THREE.Color("white");
             kinematic_tree = UrdfLoader.createKinematicTree(xhr.responseXML, scene, xml_prefix);
+            // Parse the kinematic tree.
+            let tip_frame_name = Array.from(kinematic_tree.frames.keys()).pop();
+            console.log("Position of " + tip_frame_name + ": " + kinematic_tree.getWorldPose(tip_frame_name).getTranslation().format(4));
         }
         xhr.send();
     }
@@ -65,9 +69,6 @@ let sketch = (p) => {
         raycaster = new THREE.Raycaster();
         poker = new PerspectiveCursor(scene, 10);
         poker.setVisibility(false);
-        // Parse the kinematic tree.
-        let tip_frame_name = Array.from(kinematic_tree.frames.keys()).pop();
-        console.log("Position of " + tip_frame_name + ": " + kinematic_tree.getWorldPose(tip_frame_name).getTranslation().format(4));
         // Finish the geometry setup.
         webGlInit();
         // Hold some items in global scope so they are accessible from the console.
