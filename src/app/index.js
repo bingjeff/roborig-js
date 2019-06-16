@@ -40,6 +40,7 @@ let sketch = (p) => {
         const xml_prefix = "xml/kuka_iiwa/";
         let xml_filename = xml_prefix + "model.urdf";
         let xhr = new XMLHttpRequest();
+        xhr.overrideMimeType("text/xml");
         xhr.open("GET", xml_filename, /*async*/ true);
         xhr.onerror = function () { console.log("Failed to load: " + xml_filename); }
         xhr.onload = function () {
