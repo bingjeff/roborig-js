@@ -1,6 +1,8 @@
 # roborig-js
 Basic kinematics and dynamics for rigid-body chains written in javascript.
 
+A demo of the kinematics using basic inverse-kinematics is here: [bingjeff.github.io/roborig-js/dist](https://bingjeff.github.io/roborig-js/dist/).
+
 ## Setup
 This project is based around:
 
