@@ -1,0 +1,5 @@
+# No need to include yarn errors.
+yarn-error.log
+
+# No need to upload modules.
+node_modules/
